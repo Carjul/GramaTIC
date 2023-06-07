@@ -15,7 +15,7 @@ const nivelSchema = new Schema({
     required: true
   },
   temas: [{
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.Number,
     ref: 'Temas'
   }]
 });

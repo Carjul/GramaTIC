@@ -9,8 +9,8 @@ const actividadSchema = new Schema({
     unique: true
   },
   id_tema: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tema',
+    type: Schema.Types.Number,
+    ref: 'Temas',
     required: true
   },
   nombre: {
