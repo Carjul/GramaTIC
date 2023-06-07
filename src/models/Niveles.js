@@ -1,9 +1,25 @@
-const {Schema,model} = require('mongoose');
+const mongoose = require('mongoose');
+
 require("../db")
-const nivel = new Schema({
-    Nombre: String,
-    Estado:Boolean,
 
-})
+const Schema = mongoose.Schema;
 
-module.exports = model("Nivel", nivel);
+const nivelSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  nombre: {
+    type: String,
+    required: true
+  },
+  temas: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Temas'
+  }]
+});
+
+const Nivel = mongoose.model('Nivel', nivelSchema);
+
+module.exports = Nivel;
