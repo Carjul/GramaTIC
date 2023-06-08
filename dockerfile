@@ -1,4 +1,6 @@
-FROM debian:buster
+ARG BASE_DEBIAN=buster
+FROM debian:${BASE_DEBIAN}
+ARG XAMPP_URL
 LABEL maintainer="Tomas Jasek<tomsik68 (at) gmail (dot) com>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -15,12 +17,14 @@ RUN apt-get update --fix-missing && \
   apt-get -y install nano vim less --no-install-recommends && \
   apt-get clean
 
-RUN curl -Lo xampp-linux-installer.run "https://www.apachefriends.org/xampp-files/8.0.0/xampp-linux-x64-8.0.0-0-installer.run?from_af=true" && \
+RUN curl -Lo xampp-linux-installer.run $XAMPP_URL && \
   chmod +x xampp-linux-installer.run && \
   bash -c './xampp-linux-installer.run' && \
   ln -sf /opt/lampp/lampp /usr/bin/lampp && \
   # Enable XAMPP web interface(remove security checks)
   sed -i.bak s'/Require local/Require all granted/g' /opt/lampp/etc/extra/httpd-xampp.conf && \
+  # Enable error display in php
+  sed -i.bak s'/display_errors=Off/display_errors=On/g' /opt/lampp/etc/php.ini && \
   # Enable includes of several configuration files
   mkdir /opt/lampp/apache2/conf.d && \
   echo "IncludeOptional /opt/lampp/apache2/conf.d/*.conf" >> /opt/lampp/etc/httpd.conf && \
