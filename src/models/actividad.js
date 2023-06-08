@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+
 require("../db")
 const Schema = mongoose.Schema;
 
 const actividadSchema = new Schema({
-  id: {
+  _id: {
     type: Number,
     required: true,
     unique: true
